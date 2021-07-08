@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 import environ
-import django_on_heroku
+
 
 env = environ.Env(
     # set casting, default value
@@ -148,5 +148,6 @@ INTERNAL_IPS = [
 ]
 
 # Configure Django App for Heroku.
+import django_on_heroku
 django_on_heroku.settings(locals())
 del DATABASES['default']['OPTIONS']['sslmode']
