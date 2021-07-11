@@ -15,11 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
+from django import urls
 from django.urls import include, path
+from django.urls.resolvers import URLPattern
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', views.home, name="home"),
     path('accounts/', include('registration.backends.default.urls')),
+    path('profile/', views.profile_page, name='profile_page'),
+    path('<int:pk>/delete_habit/', views.delete_habit, name='delete_habit'),
+    path('<int:pk>/edit_habit/', views.edit_habit, name='edit_habit'),
+    path('habits/', views.habit_list, name='habit_list'),
+    path('habits/add/', views.add_habit, name='add_habit')
 
 ]
 

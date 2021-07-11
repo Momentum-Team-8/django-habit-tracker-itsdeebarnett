@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models import constraints
 from django.db.models.deletion import CASCADE
 from django.db.models.fields.related import ForeignKey
 from django.utils import timezone
- 
+from django.db.models.constraints import UniqueConstraint
 
 class User(AbstractUser):
     def __str__(self):
@@ -26,3 +27,8 @@ class HabitTracker(models.Model):
         habit = models.ForeignKey(Habit, on_delete=models.CASCADE)
         complete_goal = models.PositiveIntegerField()
         date = models.DateField(null=True)
+
+class Meta:
+        constraints = [
+            UniqueConstraint(fields=['habit', 'date'], name='unique_records')
+        ]
