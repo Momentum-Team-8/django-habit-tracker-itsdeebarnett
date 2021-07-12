@@ -1,23 +1,22 @@
 from django import forms
-from .models import Habit, Tracker
+from .models import Habit, HabitTracker
 
 
 class HabitForm(forms.ModelForm):
     class Meta:
         model = Habit
         fields = [
-            'user'
-            'title'
-            'goals'
+            'title',
+            'goal',
             'created_date',
         ]
 
 
 class Habit_trackerForm(forms.ModelForm):
         class Meta:
-            Model = Tracker
+            Model = HabitTracker
             fields =[
-                'habit'
-                'complete_goal'
-                'date'
+                'habit',
+                'complete_goal',
+                'date',
             ]

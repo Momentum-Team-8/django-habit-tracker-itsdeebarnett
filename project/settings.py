@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 ]
 
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
+LOGIN_REDIRECT_URL = "/"
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 
 
@@ -146,6 +147,9 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Configure Django App for Heroku.
 import django_on_heroku

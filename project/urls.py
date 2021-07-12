@@ -18,16 +18,18 @@ from django.conf import settings
 from django import urls
 from django.urls import include, path
 from django.urls.resolvers import URLPattern
-from . import views
+from core import views as habit_views
 
 urlpatterns = [
-    path('', views.home, name="home"),
+    path('admin/', admin.site.urls),
+    path('', habit_views.home, name="home"),
     path('accounts/', include('registration.backends.default.urls')),
-    path('profile/', views.profile_page, name='profile_page'),
-    path('<int:pk>/delete_habit/', views.delete_habit, name='delete_habit'),
-    path('<int:pk>/edit_habit/', views.edit_habit, name='edit_habit'),
-    path('habits/', views.habit_list, name='habit_list'),
-    path('habits/add/', views.add_habit, name='add_habit')
+    path('profile/', habit_views.profile_page, name='profile_page'),
+    path('<int:pk>/delete_habit/', habit_views.delete_habit, name='delete_habit'),
+    path('<int:pk>/edit_habit/', habit_views.edit_habit, name='edit_habit'),
+    path('habits/', habit_views.habit_list, name='habit_list'),
+    path('habits/add/', habit_views.add_habit, name='add_habit'),
+    path('habits/<int:pk>/trackerlist', habit_views.trackerlist, name='trackerlist')
 
 ]
 
