@@ -17,8 +17,8 @@ def profile_page(request):
 
 @login_required
 def habit_list(request):
-    habit = Habit.objects.all()
-    return render(request, "habit_tracker/habit_list.html", {"habit": habit})
+    habits = Habit.objects.all()
+    return render(request, "habit_tracker/habit_list.html", {"habits": habits})
 
 
 def trackerlist(request, pk):
@@ -26,18 +26,21 @@ def trackerlist(request, pk):
     tracker = habit.tracker.filter()
     return render(request, "habit_tracker/trackerlist.html", {"habit":habit, "tracker":tracker, "pk": pk})
 
+@login_required
 def add_habit(request):
     if request.method == 'POST':
         form = HabitForm(request.POST)
         if form.is_valid():
             habit = form.save(commit=False)
+            habit.user = request.user
             habit.created_date = timezone.now()
             habit.save()
-            return redirect('habit_list', pk=habit.pk)
+            return redirect(to='habit_list')
     else:
         form = HabitForm()
     return render(request, 'habit_tracker/add_habit.html', {'form': form})
 
+@login_required
 def edit_habit(request, pk):
     habit = get_object_or_404(Habit, pk=pk)
     if request.method == 'POST':
@@ -46,14 +49,16 @@ def edit_habit(request, pk):
             habit = form.save(commit=False)
             habit.created_date = timezone.now()
             habit.save()
-            return redirect('habit_list', pk=pk)
+            return redirect('habit_list')
     else:
         form = HabitForm()
-    return render(request, 'habit_tracker/edit_habit.html', {'form': form, 'habit': habit})
+    return render(request, 'habit_tracker/add_habit.html', {'form': form})
 
 
 def delete_habit(request, pk):
     habit = get_object_or_404(Habit, pk=pk)
-    habit.delete()
-    return redirect('habit_list', pk=pk)
+    if request.method == 'POST':
+        habit.delete()
+        return redirect('habit_list')
+    return render(request, 'habit_tracker/delete_habit.html', {'habit': habit})
 

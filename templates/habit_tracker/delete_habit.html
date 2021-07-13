@@ -4,9 +4,13 @@
 <h1>Delete Habit</h1>
 
 <div>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save">Delete</button>
+    <form action="{% url 'delete_habit' pk=habit.pk %}" method="POST">
+      {% csrf_token %}
+      <p>Are you sure you want to delete {{habit.title}}?</p>
+      <div>
+        <button type="submit">Delete</button><br />
+        <a href="{% url 'habit_list' %}">Cancel</a>
+      </div>
     </form>
-</div>
+  </div>
 {% endblock %}

@@ -16,6 +16,7 @@ class Habit(models.Model):
         user = models.ForeignKey(to=User,on_delete=models.CASCADE)
         title = models.CharField(max_length=200)
         goal = models.PositiveIntegerField()
+        goaltype = models.CharField(max_length=100, null=True)
         created_date = models.DateTimeField(default=timezone.now)
 	
         def __str__(self):
